@@ -7,7 +7,11 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Search'),
+        child: Text(
+          'Search',
+          style: TextStyle(
+              fontWeight: FontWeight.lerp(FontWeight.w300, FontWeight.w600, 5)),
+        ),
       ),
     );
   }
