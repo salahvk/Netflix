@@ -6,7 +6,7 @@ import 'package:netflix/presentation/new_and_hot/new.dart';
 import '../download/download.dart';
 import '../fast_Laughs/fast_laughs.dart';
 import '../home/home.dart';
-import '../search/search.dart';
+import '../search/search_before.dart';
 
 class ScreenMainPage extends StatelessWidget {
   final list = [Home(), New_and_Hot(), Fast(), Search(), Download()];
