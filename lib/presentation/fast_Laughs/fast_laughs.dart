@@ -25,7 +25,7 @@ class Fast extends StatelessWidget {
                             child: CircleAvatar(
                                 backgroundColor: kblack.withOpacity(0.7),
                                 radius: 25,
-                                child: Icon(
+                                child: const Icon(
                                   Icons.volume_off,
                                   color: kwhite,
                                 )),
@@ -41,7 +41,7 @@ class Fast extends StatelessWidget {
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
+                        children: const [
                           CircleAvatar(
                             radius: 25,
                             backgroundImage: NetworkImage(

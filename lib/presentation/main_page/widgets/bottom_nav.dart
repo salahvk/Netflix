@@ -9,14 +9,14 @@ class BottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: indexChanger,
-        builder: (BuildContext, int newIndex, _) {
+        builder: (context, int newIndex, _) {
           return BottomNavigationBar(
             currentIndex: newIndex,
             onTap: (index) {
               indexChanger.value = index;
             },
-            selectedItemColor: Colors.blue,
-            unselectedItemColor: Colors.blue,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.grey,
             backgroundColor: Colors.black,
             type: BottomNavigationBarType.fixed,
             selectedIconTheme: const IconThemeData(color: Colors.white),
