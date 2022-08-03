@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/application/downloads/downloads_bloc.dart';
 import 'package:netflix/presentation/download/core/color.dart';
 import 'package:netflix/presentation/download/core/constants.dart';
 import 'package:netflix/presentation/download/widgets/app_bar_widget.dart';
@@ -65,12 +67,6 @@ class Section1 extends StatelessWidget {
 }
 
 class Section2 extends StatelessWidget {
-  final List movieImages = [
-    "https://th.bing.com/th/id/OIP.kZ5pi91lDwwFZolIwl5gmwHaJQ?pid=ImgDet&rs=1",
-    "https://th.bing.com/th/id/R.a6146867e34b55a071832ea9365e617f?rik=zEYqvySEEZo4%2bg&riu=http%3a%2f%2fcdn.pastemagazine.com%2fwww%2farticles%2fTheWitcher-Netflix-TeaserPoster.jpg&ehk=Sg70OBAfCYD9mqccFqFHV3cAZ%2fylhA6JEf4d0HGZmvw%3d&risl=&pid=ImgRaw&r=0",
-    "https://th.bing.com/th/id/OIP.ATDrvdlwYQboxpBGEeh3ZQHaLS?w=182&h=278&c=7&r=0&o=5&dpr=1.25&pid=1.7"
-  ];
-
   Section2({
     Key? key,
     required this.width,
@@ -80,34 +76,46 @@ class Section2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: width,
-      width: width,
-      child: Stack(alignment: AlignmentDirectional.center, children: [
-        CircleAvatar(
-          radius: width * 0.35,
-          backgroundColor: Colors.grey,
-        ),
-        MovieBox(
-          x: -15,
+    // WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //   BlocProvider.of<DownloadsBloc>(context)
+    //       .add(const DownloadsEvent.getdownloadsImage());
+    // });
+    BlocProvider.of<DownloadsBloc>(context)
+        .add(const DownloadsEvent.getdownloadsImage());
+    return BlocBuilder<DownloadsBloc, DownloadsState>(
+      builder: (context, state) {
+        return Container(
+          height: width,
           width: width,
-          margin: EdgeInsets.only(
-            right: width * 0.4,
-          ),
-          images: movieImages[0],
-        ),
-        MovieBox(
-          x: 15,
-          width: width,
-          margin: EdgeInsets.only(left: width * 0.4),
-          images: movieImages[2],
-        ),
-        MovieBox(
-          width: width,
-          margin: EdgeInsets.only(left: 0),
-          images: movieImages[1],
-        ),
-      ]),
+          child: state.isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Stack(alignment: AlignmentDirectional.center, children: [
+                  CircleAvatar(
+                    radius: width * 0.35,
+                    backgroundColor: Colors.grey,
+                  ),
+                  MovieBox(
+                    x: -15,
+                    width: width,
+                    margin: EdgeInsets.only(
+                      right: width * 0.4,
+                    ),
+                    images: '$imageAppendUrl${state.downloads![0].posterPath}',
+                  ),
+                  MovieBox(
+                    x: 15,
+                    width: width,
+                    margin: EdgeInsets.only(left: width * 0.4),
+                    images: '$imageAppendUrl${state.downloads![1].posterPath}',
+                  ),
+                  MovieBox(
+                    width: width,
+                    margin: EdgeInsets.only(left: 0),
+                    images: '$imageAppendUrl${state.downloads![2].posterPath}',
+                  ),
+                ]),
+        );
+      },
     );
   }
 }
